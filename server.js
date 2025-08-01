@@ -78,18 +78,15 @@ app.get('/api/users', async (req, res) => {
         const { data: authUser } = await supabase.auth.admin.getUserById(profile.user_id);
 
         return {
-          Name: `${profile.first_name} ${profile.last_name}`,
-          File: fileUrl,
-          PhoneNumber: profile.phone,
-          Email: authUser?.user?.email || null
+          "First Name": profile.first_name,
+          "Phone Number": profile.phone || "",
+          "File Upload": fileUrl || ""
         };
       })
     );
 
     res.json({
-      success: true,
-      count: usersData.length,
-      data: usersData
+      entries: usersData
     });
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -145,13 +142,9 @@ app.get('/api/users/:userId', async (req, res) => {
     const { data: authUser } = await supabase.auth.admin.getUserById(userId);
 
     res.json({
-      success: true,
-      data: {
-        Name: `${profile.first_name} ${profile.last_name}`,
-        File: fileUrl,
-        PhoneNumber: profile.phone,
-        Email: authUser?.user?.email || null
-      }
+      "First Name": profile.first_name,
+      "Phone Number": profile.phone || "",
+      "File Upload": fileUrl || ""
     });
   } catch (error) {
     console.error('Error fetching user:', error);
@@ -210,9 +203,9 @@ app.get('/api/users/first', async (req, res) => {
     const { data: authUser } = await supabase.auth.admin.getUserById(profile.user_id);
 
     res.json({
-      Name: `${profile.first_name} ${profile.last_name}`,
-      File: fileUrl,
-      PhoneNumber: profile.phone
+      "First Name": profile.first_name,
+      "Phone Number": profile.phone || "",
+      "File Upload": fileUrl || ""
     });
   } catch (error) {
     console.error('Error fetching first user:', error);
