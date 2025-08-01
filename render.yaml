@@ -1,31 +1,17 @@
 services:
+  # Web Service
   - type: web
     name: everconnect-api
     runtime: docker
-    plan: free
-    region: oregon # oregon, ohio, frankfurt, or singapore
-    
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
-    
+    repo: https://github.com/ranteckgsr/everconnect-api
+    branch: main
+    healthCheckPath: /health
     envVars:
+      - key: PORT
+        value: 10000
+      - key: SUPABASE_URL
+        value: https://lkspowixyoxemnmaetle.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Set this in Render dashboard for security
       - key: NODE_ENV
         value: production
-      
-      - key: PORT
-        value: 3001
-      
-      # Add these in Render dashboard for security
-      - key: SUPABASE_URL
-        sync: false
-      
-      - key: SUPABASE_SERVICE_ROLE_KEY
-        sync: false
-    
-    healthCheckPath: /health
-    
-    autoDeploy: true
-    
-    # Optional: Set up a custom domain
-    # domains:
-    #   - everconnect-api.yourdomain.com

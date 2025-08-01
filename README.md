@@ -1,67 +1,79 @@
-# EverConnect API
+# EverConnect API Standalone
 
-Standalone API service for EverConnect application.
-
-## Features
-
-- RESTful API endpoints for user data
-- Supabase integration for data storage
-- Docker support for easy deployment
-- Rate limiting and security features
+Simple API service to fetch files from Supabase storage.
 
 ## API Endpoints
 
-- `GET /health` - Health check endpoint
-- `GET /api/users` - Get all users with their files
-- `GET /api/users/first` - Get the first user
-- `GET /api/users/:userId` - Get a specific user by ID
+- `GET /health` - Health check
+- `GET /api/files/first` - Returns the first file with user data
+- `GET /api/files` - Lists all files in the temp folder
 
 ## Local Development
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file based on `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Add your Supabase credentials to `.env`
-
-5. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-## Deployment on Render
-
-1. Fork this repository
-2. Connect your GitHub account to Render
-3. Create a new Web Service
-4. Connect your forked repository
-5. Add environment variables in Render dashboard:
-   - `SUPABASE_URL`: Your Supabase project URL
-   - `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key
-6. Deploy!
-
-## Docker
-
-Build and run locally:
+1. Install dependencies:
 ```bash
-docker build -t everconnect-api .
-docker run -p 3001:3001 --env-file .env everconnect-api
+npm install
 ```
 
-## Environment Variables
+2. Set environment variables (create `.env` file):
+```
+SUPABASE_URL=https://lkspowixyoxemnmaetle.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_key_here
+```
 
-- `SUPABASE_URL` - Your Supabase project URL
-- `SUPABASE_SERVICE_ROLE_KEY` - Service role key for admin access
-- `PORT` - Server port (default: 3001)
-- `NODE_ENV` - Environment (development/production)
+3. Run the server:
+```bash
+npm start
+```
 
-## License
+## Deploy to Render
 
-MIT
+### Method 1: Using Render Dashboard
+
+1. Push this code to a GitHub repository
+2. Go to [Render Dashboard](https://dashboard.render.com/)
+3. Click "New +" and select "Web Service"
+4. Connect your GitHub account and select your repository
+5. Configure the service:
+   - **Name**: everconnect-api
+   - **Runtime**: Docker
+   - **Branch**: main
+6. Add environment variables:
+   - `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key
+7. Click "Create Web Service"
+
+### Method 2: Using render.yaml
+
+1. Update the `render.yaml` file with your GitHub repository URL
+2. Push to GitHub
+3. In Render Dashboard, click "New +" → "Blueprint"
+4. Connect your repository
+5. Add the `SUPABASE_SERVICE_ROLE_KEY` in the Render dashboard
+
+## Docker Build (Optional)
+
+Build locally:
+```bash
+docker build -t everconnect-api .
+docker run -p 3000:3000 -e SUPABASE_SERVICE_ROLE_KEY=your_key everconnect-api
+```
+
+## Usage
+
+Once deployed on Render, you can access:
+```
+https://your-service-name.onrender.com/api/files/first
+```
+
+This will return:
+```json
+{
+  "entries": [
+    {
+      "First Name": "John",
+      "Phone Number": "7777777777",
+      "File Upload": "https://lkspowixyoxemnmaetle.supabase.co/storage/v1/object/public/user-files/temp/0.08962897515395651.txt"
+    }
+  ]
+}
+```

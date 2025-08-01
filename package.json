@@ -1,21 +1,16 @@
 {
-  "name": "everconnect-api",
+  "name": "everconnect-api-standalone",
   "version": "1.0.0",
-  "description": "API for EverConnect to expose user data",
+  "description": "Simple API to fetch files from Supabase storage",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node server.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-rate-limit": "^7.1.5"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
   }
 }
